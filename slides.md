@@ -2,7 +2,7 @@
 theme: seriph
 # background: https://source.unsplash.com/collection/94734566/1920x1080
 class: text-center
-highlighter: prism
+#highlighter: prism
 lineNumbers: false
 info: |
   ## Schulung Home Assistant
@@ -18,28 +18,217 @@ mdc: true
 
 ## Heimautomatisierung mit Home Assistant (Einstieg)
 
-
 ---
+
 transition: fade-out
 ---
 
 # Agenda
 
+---
 
+layout: default
+---
+---
+
+# Vor dem Kurs - 1
+
+- Vorbereitung: Download und Installation von Homeassistant OS
 
 ---
-layout: default
+
+# Vor dem Kurs - 2: Downloads
+
+* [Virtualbox](https://www.virtualbox.org)
+* [Homeassistant OS für Virtualbox](https://www.home-assistant.io/installation/windows)
+Altnerativ:
+* Wer Homeassistant (OS) schon installiert hat, kann dieses nutzen
+
+---
+
+# Vor dem Kurs - 3: Installation für diese Schulung
+
+* Virtualbox installieren
+* Homeassistant OS für Virtualbox herunterladen
+* Homeassistant OS in Virtualbox importieren
+* Homeassistant OS starten
+---
+
+# Home Assitant - Was ist das?
+
+* Open Source Software
+* Heimautomatisierung
+
+---
+
+# Alternativen
+
+* [ioBroker](https://www.iobroker.net)
+* [FHEM](https://fhem.de)
+* [openHAB](https://www.openhab.org)
+* [Domoticz](https://www.domoticz.com)
+* [Homey](https://homey.app)
+* [HomeKit](https://www.apple.com/de/ios/home)
+* [Homebridge](https://homebridge.io)
+* Philips Hue
+
+Keine 100% Deckung der jeweiligen Alternativen (z.B. Philips Hue steuert nur Lampen etc.)
+
 ---
 
 # Motivation
 
+* Warum Home Assistant?
+  * Privatsphäre/Datenschutz
+  * Offenheit
+  * Flexibilität
+  * Viele Geräte
+  * Viele Protokolle
+  * Viele Möglichkeiten
+  * Open Source
+  * Community
 
 
 ---
 
+# Systemanforderungen - 1
+
+* Raspberry Pi 3 oder 4 (Ab da "Macht es Spaß")
+  * Es gibt fertige Hardware von Home Assistant (z.B. [Blue](https://www.home-assistant.io/blue), Yellow und Green)
+* Beim Installieren von aufwendigen Erweiterungen: x86 "Server" und >= 4GB RAM
+* Für die Verwendung von Protokollen wie Zigbee, Z-Wave, EnOcean, 433MHz, 868MHz, 2,4GHz, 5GHz, Bluetooth, Infrarot, etc. werden zusätzliche Hardware benötigt
 
 ---
 
+# Systemanforderungen - 2
+
+* Persönliche Empfehlung:
+  * Zigbee:
+    * Home Assistant SkyConnect:
+      * Einfachste Integration
+      * Kann auch Matter
+      * Integration mit *ZHA*
+    * SONOFF Zigbee 3.0 USB Dongle Plus
+      * Gute Antenne, guter Empfang (auch durch Wände)
+      * Preiswert
+      * Integration mit *Zigbee2MQTT*
+
+---
+
+# Installation in der Praxis
+
+* Bei Raspberry Pi
+  * [Raspberry Pi Imager](https://www.raspberrypi.org/software/)
+  * Mit Image für Raspbery Pi flashen
+* Für x86 Server:
+  * [Homeassistant OS](https://www.home-assistant.io/installation/) folgen
+  * Mit USB Stick installieren
+* Für Promox Server
+  * Installations Skript von [https://tteck.github.io/Proxmox/](https://tteck.github.io/Proxmox/)
+
+---
+
+# Installation - 1
+
+* Schulung:
+  * VirtualBox Image importieren
+* Praxis:
+  * Balana Etcher benutzen um Image zu flashen
+    * Raspberry Pi: SD Karte
+    * Andere Rechner: USB Stick
+
+---
+
+# Installation - 2
+
+* Nach einiger Zeit erscheint ein Textfeld mit der URL (IP Adresse und Port)
+* Diese URL in den Browser kopieren
+* Falls die URL nicht funktioniert, kann auch die IP Adresse verwendet werden (Port nicht vergessen!)
+* Alle weiteren Schritte dieser Schulung finden im Browser statt
+
+---
+layout: image
+image: installed_cli.png
+backgroundSize: contain
+
+---
+---
+
+# Installation 3
+
+* Wir klicken uns nun im Browser durch den Installationsprozess
+* Der Ort ist dabei Wichtig, da er für die Wettervorhersage benötigt wird
+* Auch für Ortung von Geräten (z.B. Smartphones) ggf. wichtig
+* Ob wir statistiken Teilen ist uns überlassen
+* Ggf. werden schon Geräte gefunden
+* Am Ende sehen wir eine Übersicht mit Wetter
+
+
+
+---
+layout: image
+image: installation_01.png
+backgroundSize: contain
+
+---
+---
+layout: image
+image: installation_02.png
+backgroundSize: contain
+
+---
+---
+layout: image
+image: installation_03.png
+backgroundSize: contain
+
+---
+---
+layout: image
+image: installation_04.png
+backgroundSize: contain
+
+---
+---
+layout: image
+image: installation_05.png
+backgroundSize: contain
+
+---
+---
+layout: image
+image: installation_06.png
+backgroundSize: contain
+
+---
+---
+
+
+
+
+# TODO:
+
+* Grafische und Textuelle Konfiguration
+ * Unterschied zwischen grafischer und textueller Konfiguration
+ * Einführung in die Home Assistant Lovelace UI
+ * Grundlagen der textuellen Konfiguration mittels YAML
+* Einbinden von Zigbee (als Beispiel)
+ * Was ist Zigbee und warum ist es wichtig für die Heimautomatisierung?
+ * Integration von Zigbee-Geräten in Home Assistant
+ * Best Practices und Troubleshooting
+* Automatisierungen: Das “smart” in Smart-Home
+ * Grundlagen der Automatisierung
+ * Erstellen von einfachen bis komplexen Automatisierungsregeln
+ * Szenarien, Auslöser, Bedingungen und Aktionen
+* Weitere Datenquellen und Dienste
+ * Am Rande: Einbindung externer Datenquellen wie Wetterdienste, Kalender und mehr
+ * Verknüpfen und Darstellen dieser Daten in Home Assistant
+* Updates und Backups
+ * Wichtige Aspekte von Systemupdates
+ * Erstellen und Wiederherstellen von Backups
+* Fragen, Fragen, Fragen
+ * Offene Diskussion und Fragerunde
+ *
 # Abschluss
 
 [Diese Schulung](https://github.com/derphilipp/schulung_homeassistnat) · [Schulung ansehen](https://derphilipp.github.io/schulung_homeassistant) · [Kontakt](https://philipp-weissmann.de)
