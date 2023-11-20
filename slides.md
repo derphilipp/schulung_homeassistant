@@ -2,7 +2,7 @@
 theme: seriph
 # background: https://source.unsplash.com/collection/94734566/1920x1080
 class: text-center
-#highlighter: prism
+highlighter: prism
 lineNumbers: false
 info: |
   ## Schulung Home Assistant
@@ -20,15 +20,10 @@ mdc: true
 
 ---
 
-transition: fade-out
----
-
 # Agenda
 
----
+#TODO: Agenda füllen
 
-layout: default
----
 ---
 
 # Vor dem Kurs - 1
@@ -39,8 +34,11 @@ layout: default
 
 # Vor dem Kurs - 2: Downloads
 
-* [Virtualbox](https://www.virtualbox.org)
+* [Virtualbox](https://www.virtualbox.org) (Herunterladen und installieren)
 * [Homeassistant OS für Virtualbox](https://www.home-assistant.io/installation/windows)
+  * Image für Virtualbox herunterladen
+  * Anleitung auf der Seite folgen (Achtung: Virtualbox spezifische Anleitung befolgen!)
+
 Altnerativ:
 * Wer Homeassistant (OS) schon installiert hat, kann dieses nutzen
 
@@ -52,6 +50,7 @@ Altnerativ:
 * Homeassistant OS für Virtualbox herunterladen
 * Homeassistant OS in Virtualbox importieren
 * Homeassistant OS starten
+
 ---
 
 # Home Assitant - Was ist das?
@@ -94,15 +93,46 @@ Keine 100% Deckung der jeweiligen Alternativen (z.B. Philips Hue steuert nur Lam
 # Systemanforderungen - 1
 
 * Raspberry Pi 3 oder 4 (Ab da "Macht es Spaß")
-  * Es gibt fertige Hardware von Home Assistant (z.B. [Blue](https://www.home-assistant.io/blue), Yellow und Green)
+  * Es gibt fertige Hardware von Home Assistant (z.B. [Blue](https://www.home-assistant.io/blue), [Yellow](https://www.home-assistant.io/yellow/) und [Green](https://www.home-assistant.io/green/))
 * Beim Installieren von aufwendigen Erweiterungen: x86 "Server" und >= 4GB RAM
 * Für die Verwendung von Protokollen wie Zigbee, Z-Wave, EnOcean, 433MHz, 868MHz, 2,4GHz, 5GHz, Bluetooth, Infrarot, etc. werden zusätzliche Hardware benötigt
 
 ---
 
+# Einschub: Zigbee - 1
+
+* Zigbee ist ein Funkprotokoll
+* Zigbee ist aber nicht WLAN - Funkt aber auf 2,4GHz
+* Zigbee braucht ein Gateway
+* Zigbee wird für viele Smart-Home Geräte verwendet
+* Es gibt extrem viele (teilweise günstige) Geräte
+  * Lampen (z.B. IKEA, Ledvance, Philips, etc.)
+  * Schalter (z.B. Philips, IKEA)
+  * Sensoren (z.B. Xiaomi, Aqara)
+* Zigbee ist ein Mesh-Netzwerk
+  * Jedes Gerät kann als Repeater dienen
+  * Reichweite kann so erhöht werden
+  * Geräte können so auch weiter entfernt vom Gateway sein
+
+---
+
+# Einschub: Zigbee - 2
+
+* Stolpersteine bei Zigbee
+  * Funkfrequenzen können überlaufen sein durch WLAN, Bluetooth, etc.
+  * Funkfrequenzen müssen manchmal durchprobiert werden - welche gehen bei mir?
+  * Manche Geräte sind nicht kompatibel mit allen Gateways
+  * Viele Gateways sind nicht kompatibel mit allen Geräten
+    * Alternative: Statt Gateway einen USB Stick verwenden, aber:
+      * Selbst für Homeassitant gibt es veschiedene Integrationen
+      * Integration mit Homeassistant aufwand (Meinung: Es lohnt sich aber)
+      * Ohne Homeassistant schaltet dann nix mehr
+
+---
+
 # Systemanforderungen - 2
 
-* Persönliche Empfehlung:
+* Persönliche Empfehlung für "Zigbee":
   * Zigbee:
     * Home Assistant SkyConnect:
       * Einfachste Integration
@@ -157,10 +187,10 @@ backgroundSize: contain
 # Installation 3
 
 * Wir klicken uns nun im Browser durch den Installationsprozess
-* Der Ort ist dabei Wichtig, da er für die Wettervorhersage benötigt wird
+* Der Ort ist dabei wichtig, da er für die Wettervorhersage benötigt wird
 * Auch für Ortung von Geräten (z.B. Smartphones) ggf. wichtig
-* Ob wir statistiken Teilen ist uns überlassen
-* Ggf. werden schon Geräte gefunden
+* Ob wir Statistiken teilen ist uns überlassen
+* Ggf. werden bei der Installation schon Geräte gefunden
 * Am Ende sehen wir eine Übersicht mit Wetter
 
 
@@ -203,8 +233,12 @@ backgroundSize: contain
 ---
 ---
 
+# Installation 4
 
+* Falls noch nicht geschehen: (USB) Geräte an den Rechner anschließen
+* Bei Nutzung von Virtualbox können wir Geräte durchreichen (z.B. Zigbee USB Stick)
 
+---
 
 # TODO:
 
