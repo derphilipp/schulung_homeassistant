@@ -363,7 +363,6 @@ demo:
 * Wir schauen durch alle Konfigurations-Optionen von Home Assistant
 
 ---
-
 layout: image
 image: settings.png
 backgroundSize: contain
@@ -425,6 +424,111 @@ backgroundSize: contain
 
 
 ---
+
+# Areas & Zones - 1
+
+* Areas
+  * Hier können Areas erstellt und verwaltet werden
+  * Eine *Area* enspricht i.d.R. einem Raum
+  * Hier können alle Geräte eines Raumes zusammengefasst werden
+  * Tipp: Schöne Bilder für die Areas verwenden
+  * Nutzen: Geräte können so einfacher gefunden werden
+* Zones:
+  * Hier können Zonen erstellt und verwaltet werden
+  * Eine Zone ist eine geografische Zone z.B. "Zuhause" oder "50 Meter um das Haus herum"
+  * Hiermit können Automatisierungen erstellt werden, die auf die Zonen reagieren
+    * Beispiel: Wenn ich nach Hause komme, dann schalte das Licht ein
+
+---
+
+# Dashboards
+
+* Hier können Dashboards erstellt werden
+  * Dashboards sind individuelle Ansichten
+  * Dashboards können z.B. für Tablets oder Smartphones optimiert werden
+  * Beispiele:
+    * Ein Dashboard für das Wohnzimmer mit allen Geräten und Funktionen
+    * Ein Mini-Dashboard, welches nur die wichtigsten Funktionen enthält
+  * Tipp: Hier Zeit investieren, es lohnt sich!
+
+---
+
+# Automatisierung - 1
+
+* Eine Automatisierung besteht aus
+  * Trigger:
+    * Der Auslöser für die Automatisierung
+    * Beispiel: Ein Schalter wird betätigt, ein Gerät wird eingeschaltet, es wird dunkel, etc.
+  * Condition (Optional):
+    * Die Bedingung für die Automatisierung
+    * Beispiel: Es ist nach 18 Uhr, es ist dunkel, es ist jemand zu Hause, etc.
+  * Action:
+    * Die Aktion, die ausgeführt wird, wenn der Trigger ausgelöst wurde und die Bedingung erfüllt ist
+    * Beispiel: Eine Lampe wird eingeschaltet, eine Nachricht wird gesendet, etc.
+
+---
+
+# Automatisierung - 2
+
+* Einfaches Beispiel:
+  * Beschreibung: Um 18 Uhr soll die Küchen Lampe eingeschaltet werden
+  * Trigger:
+    * Zeit: 18 Uhr
+  * Condition:
+    * Nur, wenn die Sonne schon untergegangen ist
+  * Action:
+    * Schalte die Küchenlampe ein
+
+---
+layout: image
+image: automation_01.png
+backgroundSize: contain
+---
+---
+
+# Automatisierung - 3
+
+* Vorteil grafisches "Zusammenklicken":
+  * Einfach zu verstehen
+  * Sehr übersichtlich
+  * Schnell erstellt
+  * Fehler sind schnell gefunden
+* Nachteil
+  * Extrem schlecht zu teilen (Screenshot nachbauen?)
+* Lösung: Automatisierung in YAML anzeigen lassen
+
+---
+
+# Automatisierung - 4
+
+* Automatisierung in YAML anzeigen lassen:
+  * Im 3-Punkte Menü: "Edit in YAML"
+  * Es kann nach dem Editieren wieder zurück gewechselt werden
+
+Anzeige:
+
+```yaml
+alias: 18 Uhr -> Küchenlicht an
+description: ""
+trigger:
+  - platform: time_pattern
+    hours: "18"
+    minutes: "0"
+    seconds: "0"
+condition:
+  - condition: sun
+    after: sunset
+action:
+  - type: turn_on
+    device_id: 5814380796f1aa1b95c0b0583909eb9b
+    entity_id: 70b4116985d4fca01651799789ce7200
+    domain: light
+mode: single
+
+```
+
+---
+
 
 # TODO:
 
