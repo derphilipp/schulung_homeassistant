@@ -240,6 +240,192 @@ backgroundSize: contain
 
 ---
 
+# Updates
+
+* Home Assistant wird regelmäßig aktualisiert
+* Updates können über die Weboberfläche eingespielt werden
+* Updates werden sowohl für Home Assistant selbst als auch für die installierten Erweiterungen angezeigt
+* Updates sollten regelmäßig eingespielt werden
+
+---
+layout: image
+image: updates_01.png
+backgroundSize: contain
+
+---
+---
+layout: image
+image: updates_02.png
+backgroundSize: contain
+
+---
+---
+layout: image
+image: updates_02.png
+backgroundSize: contain
+
+---
+---
+
+# Devices / Geräte
+
+* Geräte können über die Weboberfläche hinzugefügt und konfiguriert werden
+* Geräte sind physikalische Geräte, wie z.B. eine Lampe, ein Router, ein Drucker, etc.
+* Geräte können auch virtuell sein, wie z.B. ein Wetterbericht, ein Kalender, etc.
+* Etliche Geräte werden von Home Assistant automatisch erkannt / gefunden
+* Beispiel:
+
+---
+
+# Geräte hinzufügen
+
+* Geräte können über die Weboberfläche hinzugefügt werden
+
+
+---
+
+# Addons
+
+* Home Assistant kann durch Addons erweitert werden
+* Addons sind Erweiterungen, die in Home Assistant laufen
+* Addons können über die Weboberfläche installiert werden
+* Addons können über die Weboberfläche konfiguriert werden, gestartet und gestoppt
+* Beispiel: Editor "Visual Studio Code" als Addon
+
+
+---
+layout: image
+image: addons_01.png
+backgroundSize: contain
+---
+---
+layout: image
+image: addons_02.png
+backgroundSize: contain
+---
+---
+layout: image
+image: addons_03.png
+backgroundSize: contain
+---
+---
+layout: image
+image: addons_04.png
+backgroundSize: contain
+---
+---
+layout: image
+image: addons_05.png
+backgroundSize: contain
+---
+---
+layout: image
+image: addons_06.png
+backgroundSize: contain
+---
+---
+layout: image
+image: addons_07.png
+backgroundSize: contain
+---
+---
+layout: image
+image: addons_08.png
+backgroundSize: contain
+---
+---
+
+# Demo modus
+
+* Damit wir einige Geräte zur verfügung haben, können wir den Demo Modus aktivieren
+* Der Demo Modus ist nur für Testzwecke gedacht
+* Der Demo modues muss über die datei `configuration.yaml` aktiviert werden
+* Die Datei `configuration.yaml` ist die zentrale Konfigurationsdatei von Home Assistant
+* Diese öffnen wir mit dem Visual Studio Code Addon
+* Wir tragen folgendes in die Datei ZUSÄTZLICH ein:
+
+```yaml
+demo:
+```
+
+---
+
+# Konfiguration - 1
+
+* Manche Dinge können nur über die Konfigurationsdatei konfiguriert werden
+* Viele Dinge können via grafischer Oberfläche konfiguriert werden, aber auch via Konfigurationsdatei
+* Die Konfigurationsdatei ist eine YAML Datei
+  * YAML ist ein Datenformat
+  * YAML ist ein Textformat
+  * YAML ist ein Format, das für Menschen gut lesbar ist
+  * YAML muss immer korrekt eingerückt sein. Einrückungen sind wichtig!
+  * Auch grafische Oberflächen schreiben YAML Dateien, diese sind aber oft nicht so gut lesbar
+* Wir schauen durch alle Konfigurations-Optionen von Home Assistant
+
+---
+
+layout: image
+image: settings.png
+backgroundSize: contain
+---
+---
+
+# Devices & Services - 1
+
+
+* Integrations
+  * Hier werden alle Integrationen angezeigt & konfiguriert
+  * Es können weitere installiert werden, z.B. Wetterdienste, Hardware-Integrationen (Zigbee, Z-Wave, etc.)
+* Devices
+  * Hier werden alle einzelnen Geräte angezeigt
+  * Beispiele: Lampen, Schalter, Sensoren, etc.
+
+---
+
+# Devices & Services - 2
+
+
+* Entities:
+  * Entities sind die einzelnen Funktionen eines Gerätes
+  * Beispiele: Eine Lampe hat eine Entity für das Ein- und Ausschalten, eine Entity für die Helligkeit, etc.
+* Helpers:
+  * Helpers sind Hilfsfunktionen/Hilfsvariablen
+  * Beispiele:
+    * Zeitplan für das Ein- und Ausschalten einer Lampe
+    * Virtuelle Schalter
+    * Variablen: z.B. Letzte Uhrzeit, zu der ein Gerät eingeschaltet wurde
+    * Hier gibt es viel Spielraum für eigene Ideen
+
+---
+
+# Automations & Scenes - 1
+
+* Automations
+  * Hier können Automatisierungen erstellt werden
+  * Automatisierungen sind Regeln, die bestimmte Aktionen ausführen, wenn bestimmte Bedingungen erfüllt sind
+  * Beispiel: Wenn es dunkel wird, dann schalte die Lampe ein
+  * Automations können hochkomplex sein
+* Scenes
+  * Hier können Szenen erstellt werden
+  * Szenen sind gespeicherte Zustände, z.B. Lichtstimmungen für Lampen im Wohnzimmer
+
+---
+
+
+# Automations & Scenes - 2
+
+* Scripts:
+  * Hier können Skripte erstellt werden
+  * Eine oder mehrere nacheinander ausgeführte Serviceaufrufe
+  * Skripte können auch über Automatisierungen ausgeführt werden
+* Blueprints:
+  * Hier können Blueprints erstellt werden
+  * Blueprints sind Vorlagen für Automatisierungen
+  * Blueprints können auch aus der Community installiert werden
+
+
+---
+
 # TODO:
 
 * Grafische und Textuelle Konfiguration
