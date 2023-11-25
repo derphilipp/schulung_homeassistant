@@ -182,6 +182,11 @@ image: installed_cli.png
 backgroundSize: contain
 
 ---
+
+<v-click>
+  <Arrow x1="800" y1="290" x2="460" y2="290" color="red" />
+</v-click>
+
 ---
 
 # Installation 3
@@ -253,15 +258,21 @@ image: updates_01.png
 backgroundSize: contain
 
 ---
+<v-click>
+  <Arrow x1="800" y1="290" x2="220" y2="400" color="red" />
+</v-click>
 ---
 layout: image
 image: updates_02.png
 backgroundSize: contain
 
 ---
+<v-click>
+  <Arrow x1="800" y1="290" x2="550" y2="380" color="red" />
+</v-click>
 ---
 layout: image
-image: updates_02.png
+image: updates_03.png
 backgroundSize: contain
 
 ---
@@ -298,36 +309,59 @@ layout: image
 image: addons_01.png
 backgroundSize: contain
 ---
+<v-click>
+  <Arrow x1="800" y1="290" x2="220" y2="400" color="red" />
+</v-click>
 ---
 layout: image
 image: addons_02.png
 backgroundSize: contain
 ---
+<v-click>
+  <Arrow x1="800" y1="290" x2="800" y2="500" color="red" />
+</v-click>
 ---
 layout: image
 image: addons_03.png
 backgroundSize: contain
 ---
+<v-click>
+  <Arrow x1="800" y1="290" x2="500" y2="300" color="red" />
+</v-click>
 ---
 layout: image
 image: addons_04.png
 backgroundSize: contain
 ---
+<v-click>
+  <Arrow x1="800" y1="290" x2="400" y2="320" color="red" />
+</v-click>
 ---
 layout: image
 image: addons_05.png
 backgroundSize: contain
 ---
+<v-click>
+  <Arrow x1="800" y1="290" x2="400" y2="450" color="red" />
+</v-click>
 ---
 layout: image
 image: addons_06.png
 backgroundSize: contain
 ---
+<v-click>
+  <Arrow x1="800" y1="290" x2="850" y2="300" color="red" />
+  <Arrow x1="800" y1="290" x2="850" y2="350" color="red" />
+  <Arrow x1="800" y1="290" x2="850" y2="400" color="red" />
+</v-click>
 ---
 layout: image
 image: addons_07.png
 backgroundSize: contain
 ---
+<v-click>
+  <Arrow x1="800" y1="290" x2="750" y2="500" color="red" />
+</v-click>
 ---
 layout: image
 image: addons_08.png
@@ -495,6 +529,7 @@ backgroundSize: contain
   * Fehler sind schnell gefunden
 * Nachteil
   * Extrem schlecht zu teilen (Screenshot nachbauen?)
+  * Komplexe Automatisierungen sind schwer zu erstellen und SEHR schwer zu editieren
 * Lösung: Automatisierung in YAML anzeigen lassen
 
 ---
@@ -526,9 +561,145 @@ action:
 mode: single
 
 ```
+---
+
+# Template Sensoren - 1
+
+* Template Sensoren sind Sensoren, die aus anderen Sensoren errechnet werden
+* Beispiele:
+  * Ein Sensor, der die differenz zwischen zwei anderen Sensoren anzeigt (z.B. Soll- und Ist-Temperatur)
+  * Ein Sensor, der die Temperatur von vor 1 Stunde, 1 Tag, 1 Woche, etc. anzeigt
+* Template Sensoren werden in der `configuration.yaml` erstellt und konfiguriert
+
+#TODO: EINFACHERES BEISPIEL
+```yaml
+# Template that shows, when the switch 'switch.ac' was turned on last time
+- sensor:
+  - unique_id: "ac_last_on"
+    name: AC last on
+    device_class: timestamp
+    state: >
+      {{ states('sensor.time') }}
+    icon: mdi:clock
+
+
+```
+
 
 ---
 
+# Komplexe Automatisierung - 1
+
+* Situation: Wie wollen ...
+  * eine Benachrichtigung, wenn unsere Waschmaschine fertig ist
+  * eine Abschätzung, wann die Waschmaschine fertig ist
+* Probleme:
+  * Unsere Waschmaschine gibt kein Signal ab / ist nicht "smart"
+  * Wie wissen nicht wie lange ein Waschvorgang dauert
+* Lösung:
+  * Wir messen den Stromverbrauch der Waschmaschine und erkennen so ...
+    * ... wenn die Waschmaschine gestartet wurde
+    * ... wann die Waschmaschine fertig ist
+
+---
+
+# Komplexe Automatisierung - 2
+
+* Voraussetzungen:
+  * eine "Zwischensteckdose", die den Verbrauch grob misst (z.B. Shelly Plug S, NOUS A1Z, etc.)
+  * Etliche Hilfsvariablen und Automatisierungen
+  * Eine Template-Sensor, der den Endzeitpunkt eines Waschvorgangs errechnet
+* Notwendige Beobachtungen:
+  * Beobachtung: Wie viel Strom braucht die Waschmaschine im Betrieb?
+  * Beobachtung: Wie viel Strom braucht die Waschmaschine im ausgeschalteten Zustand?
+  * Wir betrachten nach einem Waschvorgang den Stromverbrauch über den Verbrauch hinweg
+
+---
+
+# Komplexe Automatisierung - 3
+
+![Stromverbrauch](washing_machine.png)
+* Anfangs sehr hoher Stromverbrauch
+* Stromverbrauch sinkt nach einiger Zeit und bleibt bis auf Schleudervorgang niedrig
+
+---
+
+# Komplexe Automatisierung - 4
+
+* Folgerungen:
+  * Wenn der Stromverbrauch über einen längeren Zeitraum niedrig  ist, ist die Waschmaschine fertig
+    * Hier: Ist der Verbrauch unter 1 Watt für 10 Minuten -> Waschmaschine ist AUS
+  * Wenn der Stromverbrauch über einen längeren Zeitraum hoch ist, ist die Waschmaschine gestartet
+    * Hier: Ist der Verbrauch über 10 Watt für 1 Minute -> Waschmaschine ist AN
+  * Bedingungen, zum "Glätten":
+    * Angehen:
+      * Nur wenn der Strommesser 5 Minuten an war, kann die Waschmaschine angehen
+      * Nur wenn die Waschmaschine aus war, kann sie angehen
+    * Ausgehen:
+      * Nur wenn die Waschmaschine an ist, kann sie ausgehen
+      * Nur wenn die Waschmaschine 5 Minuten an war, kann sie ausgehen
+
+---
+
+# Komplexe Automatisierung - 5
+
+* Was passiert beim Angehen:
+  * Wir schreiben die aktuelle Uhrzeit/Datum in einen Helfer (Startzeit) `washing_machine_started`
+  * Wir schicken eine Benachrichtigung, dass die Waschmaschine gestartet wurde
+* Was passiert beim Ausgehen:
+  * Wir schreiben die aktuelle Uhrzeit/Datum in einen Helfer (Endzeit)
+  * Wir schicken eine Benachrichtigung, dass die Waschmaschine fertig ist
+  * Wir berechnen die Dauer des Waschvorgangs (Endzeit - Startzeit) und schreiben diese in eine Helfer (Geschätzte Laufzeit) `washing_machine_estimated_runtime`
+
+---
+
+# Komplexe Automatisierung - 6
+
+* Wie wissen wir aber, dass die Waschmaschien gerade läuft?
+* Lösung:
+  * Wir schreiben, eine Template-Variable, die dies uns errechnet
+  * Diese ist wahr, wenn die Startzeit größer ist als die Endzeit (d.h. sie ist gestartet, aber nicht beendet)
+  * Zudem zeigen wir zwei verschiedene Icons an, je nach Zustand
+* In `config.yaml`:
+```yaml
+- binary_sensor:
+  - unique_id: "washing_machine_is_running"
+    name: Washing Machine is running
+    state: >
+      {{ state_attr('input_datetime.washing_machine_started','timestamp') >= state_attr('input_datetime.washing_machine_stopped','timestamp') }}
+    icon: >
+      {% if is_state("binary_sensor.washing_machine_is_running", "on") %}
+        mdi:washing-machine
+      {% else %}
+        mdi:washing-machine-off
+      {% endif %}
+```
+
+---
+
+# Komplexe Automatisierung - 7
+
+* Noch haben wir aber keine Info/Anzeige, wie lange ein laufender Waschvorgang geht
+* Lösung: Template-Variable, die die aktuelle Startzeit + die geschätzte Laufzeit addiert
+* In `config.yaml`:
+```yaml
+- sensor:
+  - unique_id: "washing_machine_estimated_endtime"
+    name: Washing machine estimated endtime
+    device_class: timestamp
+    state: >
+      {% set starttime = states.input_datetime.washing_machine_started.state | as_timestamp %}
+      {% set timediff = states.input_number.washing_machine_estimated_runtime.state | float %}
+      {{ (starttime + timediff) | timestamp_local }}
+```
+---
+
+# Komplexe Automatisierung - 8
+
+* Achtung: Noch zeigt uns die Variable nur die geschätzte Endzeit an, diese kann auch in der Vergangenheit liegen.
+* Lösung: Wir zeigen sie nur an, wenn die Waschmaschine gerade läuft (Template binary sensor, s.o.)
+
+---
 
 # TODO:
 
