@@ -569,24 +569,202 @@ mode: single
 * Beispiele:
   * Ein Sensor, der die differenz zwischen zwei anderen Sensoren anzeigt (z.B. Soll- und Ist-Temperatur)
   * Ein Sensor, der die Temperatur von vor 1 Stunde, 1 Tag, 1 Woche, etc. anzeigt
+  * Definitionen wie: Name, Einheit, etc. müssen festgelegt werden
 * Template Sensoren werden in der `configuration.yaml` erstellt und konfiguriert
-
-#TODO: EINFACHERES BEISPIEL
-```yaml
-# Template that shows, when the switch 'switch.ac' was turned on last time
-- sensor:
-  - unique_id: "ac_last_on"
-    name: AC last on
-    device_class: timestamp
-    state: >
-      {{ states('sensor.time') }}
-    icon: mdi:clock
-
-
-```
-
+* Alternativ können Sensoren seit neueren Verisonen auch in "Helper" angelegt werden
 
 ---
+
+# Template Sensoren - 2
+
+* Beispiel: Ein Template Sensor, der den Durchschnitt von zwei anderen Sensoren anzeigt
+* Wie brauchen also eine Berechnung aus vorhandenen Werten
+* Die Berechnung Beschreiben wir mit Hilfe von Templates
+* Wir gehen in den *Developer -> Templates* Bereich und testen unsere Berechnung
+* In *Developer -> Templates* fügen wir ein...
+```jinja2
+  {% set home = states('air_quality.demo_air_quality_home') | float %}
+  {% set office = states('air_quality.demo_air_quality_office') | float %}
+
+  {{ ((home + office) / 2) | round(1, default=0) }}
+```
+
+---
+
+# Template Sensoren - 3
+
+* Funktioniert unser Template, können wir nun einen Helfer anlegen
+* Wie gehen in den *Configuration -> Helpers* Bereich und legen einen neuen Helfer an
+* Wichtig: Einheit kann auch festgelegt werden
+* Man kann dies ins extreme treiben, z.B. Icon in Abhängigkeit von Wert, festlegen
+
+---
+
+# Praxis: Zigbee Stick einrichten und Geräte hinzufügen
+
+* Es gibt 2 populäre Zigbee Integrationen:
+  * ZHA / Zigbee Home Automation
+  * Zigbee2MQTT
+* Je nach verwendetem Stick kann nur eine der beiden Integrationen verwendet werden
+* Manche Sticks unterstützen aber beide Integrationen
+
+---
+
+# Zigbee Praxis - 1
+
+* ZHA:
+  * Einfachste Integration
+  * "Native" Ansatz in Home-Assitant
+  * Holt immer mehr auf, was die Anzahl der unterstützten Geräte angeht
+  * Prinzip: Nimmt Geräte, wie sie sind und Löst darauf Aktionen aus
+* Zigbee2MQTT
+  * Installation aufwendiger
+  * Sehr viele Geräte werden unterstützt
+  * Community extrem aktiv, auch sehr neue Geräte werden schnell unterstützt
+  * Prinzip: Übersetzt Geräte in ein einheitliches Protokoll (MQTT), auf das Home-Assistant zugreifen kann
+* In der Praxis sehen wir immer nur die Geräte, die wir Einbinden
+
+---
+
+# Zigbee Praxis - 2
+
+* Funk-Kanäle:
+  * Zigbee ist aber nicht WLAN - Funkt aber auf 2,4GHz
+  * Wir müssen die Funkfrequenzen prüfen, ob sie überlaufen sind!
+  * Jedes Gerät, welches wir einbinden, muss auf dem gleichen Kanal sein
+  * Wenn wir den Kanal wechseln, müssen wir alle Geräte neu einbinden -> Extrem Aufwändig
+  * Wir testen mit einigen Geräten, wie gut die Kanäle funktionieren BEVOR wir alle Geräte einbinden
+  * Wichtig: Die Bindung der Geräte erfolgt an den Stick, nicht an Home-Assistant
+    * Manche Integrationen bietet Migrationen und Backup-Möglichkeiten an
+
+---
+
+# Zigbee Praxis - 3
+
+* ZHA / Zigbee Home Automation
+  * Erscheint automatisch als Integration in Home Assistant
+  * Nur einstecken des Sticks notwendig
+  * Installation triviales durchklicken
+  * Bei gebrauchten Geräten: "Netzwerk zurücksetzen" anwählen
+  * Installation Trivial
+
+---
+layout: image
+image: zha_01.png
+backgroundSize: contain
+
+---
+
+<v-click>
+  <Arrow x1="800" y1="290" x2="600" y2="220" color="red" />
+</v-click>
+---
+layout: image
+image: zha_02.png
+backgroundSize: contain
+
+---
+---
+layout: image
+image: zha_03.png
+backgroundSize: contain
+
+---
+---
+layout: image
+image: zha_04.png
+backgroundSize: contain
+
+---
+---
+layout: image
+image: zha_05.png
+backgroundSize: contain
+
+---
+<v-click>
+  <Arrow x1="800" y1="290" x2="750" y2="500" color="red" />
+</v-click>
+---
+layout: image
+image: zha_06.png
+backgroundSize: contain
+
+---
+---
+
+# Zigbee Praxis - 3
+
+* Als Beispiel nehme ich ein ConBee II und Zigbee2MQTT
+* Wir brauchen:
+  * ConBee II Stick
+  * Editor-Addon auf Home-Assistant
+* Wir führen aus:
+  * Addon-URL für Zigbee2MQTT eintragen
+  * Addons Installieren:
+    * MQTT Broker (Nachrichten werden über MQTT ausgetauscht)
+    * Zigbee2MQTT
+* Wichtig:
+  * Zigbee2MQTT kann nicht starten, bevor der MQTT Broker installiert und gestartet ist
+
+---
+
+# Addon URL hinzufügen
+
+* `https://github.com/zigbee2mqtt/hassio-zigbee2mqtt`
+* bzw. auf [der Seite](https://github.com/zigbee2mqtt/hassio-zigbee2mqtt) nach "Installation" schauen
+
+---
+layout: image
+image: add_url_to_store_01.png
+backgroundSize: contain
+
+---
+<v-click>
+  <Arrow x1="800" y1="290" x2="810" y2="30" color="red" />
+</v-click>
+---
+layout: image
+image: add_url_to_store_02.png
+backgroundSize: contain
+
+---
+<v-click>
+  <Arrow x1="800" y1="290" x2="780" y2="120" color="red" />
+</v-click>
+---
+layout: image
+image: add_url_to_store_03.png
+backgroundSize: contain
+
+---
+<v-click>
+  <Arrow x1="800" y1="290" x2="730" y2="300" color="red" />
+</v-click>
+---
+layout: image
+image: add_url_to_store_04.png
+backgroundSize: contain
+
+---
+<v-click>
+  <Arrow x1="800" y1="290" x2="740" y2="360" color="red" />
+</v-click>
+---
+layout: image
+image: add_url_to_store_05.png
+backgroundSize: contain
+
+---
+---
+
+# MQTT Broker installieren
+
+* Schon in den Addons vorhandenen
+* Einfach Durchklicken!
+
+---
+
 
 # Komplexe Automatisierung - 1
 
