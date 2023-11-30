@@ -143,6 +143,8 @@ Keine 100% Deckung der jeweiligen Alternativen (z.B. Philips Hue steuert nur Lam
       * Preiswert
       * Integration mit *Zigbee2MQTT*
 
+
+
 ---
 
 # Installation in der Praxis
@@ -610,6 +612,37 @@ mode: single
 
 ---
 
+# Zigbee Tipps - 1
+
+* Persönliche Erfahrung / Erfahrung:
+  * Schaltbare Steckdosen dienen als Repeater
+  * Je zahlreicher die Geräte, desto besser wird das Netzwerk
+* Lampen
+  * Keine Lampen von AwoX kaufen (Achtung! Unter vielen Handelsnamen in Baumärkten erhältlich)
+  * Manch günstige Lampen sind echt okay
+  * Manche Lampen pfeifen! Unbedingt ausprobieren
+  * Anwendungszweck prüfen: Eine Lampe die okay ist für die Besenkammer, ist nicht unbedingt okay für das Wohnzimmer
+* Sensoren
+  * Es gibt viele Geräte, komplett unterschiedlicher Preisklassen -> Recherchieren
+
+---
+
+# Zigbee Tipps - 2
+
+* Sensoren kreativ nutzen:
+  * Fensterkontakte an die Waschmaschinentür -> Prüfen ob sie schon geleert wurde
+  * Bewegungsmelder in den Briefkasten -> Löst aus, wenn Post kommt
+  * Schaltsteckdose mit Verbrauchsmesser -> Nachricht, wenn Trockner fertig ist
+* Sensoren haben verschiedene Bauweisen und damit Vor- und Nachteile
+  * z.B. Bewegungsmelder mit Batterie -> Flexibel einsetzbar, aber Batterie muss gewechselt werden
+* Achtung! Sensoren haben oft mehrere Funktionen - unterschiedlich verknüpft
+  * z.B. Bewegungsmelder, der auch Helligkeitssensor hat
+  * Manchmal sind diese aber nicht auslesbar
+    * Beispiel: Ikea Bewegungsmelder haben einen Helligkeitssensor, können diesen nutzen um z.B. Tagsüber nicht zu schalten. Der Helligkeits-Wert wird aber nicht an Homeassistant geliefert
+    * Auch können Batteriebetriebene Sensoren oft nur alle X Sekunden ausgelöst werden
+
+---
+
 # Zigbee Praxis - 1
 
 * ZHA:
@@ -760,10 +793,100 @@ backgroundSize: contain
 
 # MQTT Broker installieren
 
-* Schon in den Addons vorhandenen
-* Einfach Durchklicken!
+* Schon in den Addons -> Installieren
+* Einfach Durchklicken
+* Dienst starten
+* Zudem aktivieren:
+  * Start on boot
+  * Watchdog (Neustart bei Fehler)
+  * Automatische Updates
 
 ---
+layout: image
+image: install_mqtt_01.png
+backgroundSize: contain
+
+---
+<v-click>
+  <Arrow x1="900" y1="190" x2="740" y2="300" color="red" />
+</v-click>
+---
+layout: image
+image: install_mqtt_02.png
+backgroundSize: contain
+
+---
+---
+
+# Zigbee2MQTT installieren
+
+* Installation via Addons -> Installieren
+* Achtung: Je nach System muss noch Stick bzw. weiter Konfigurationen vorgenommen werden
+  * Siehe [Zigbee2MQTT Dokumentation](https://www.zigbee2mqtt.io/getting_started/what_do_i_need.html)
+  * Falls Zigbee2MQTT nicht startet / nicht laufen bleibt (grünes Feld)
+    * Fehlermeldungen ansehen (in "Log")
+    * Zumeist geben diese direkt Lösungsvorschläge aus
+
+---
+layout: image
+image: install_zigbee2mqtt_01.png
+backgroundSize: contain
+
+---
+<v-click>
+  <Arrow x1="900" y1="190" x2="420" y2="300" color="red" />
+</v-click>
+---
+layout: image
+image: install_zigbee2mqtt_02.png
+backgroundSize: contain
+
+---
+<v-click>
+  <Arrow x1="900" y1="190" x2="820" y2="70" color="red" />
+</v-click>
+---
+
+# Zigbee2MQTT konfigurieren
+
+* Es muss für diesen Stick / Zigbee2MQTT eine Konfiguration erstellt werden
+* Wir nutzen unser installiertes Editor Addon
+  * Wir editieren die datei `zigbee2mqtt/configuration.yaml`
+  * Port und Adapter Typ müssen angepasst werden
+---
+layout: image
+image: install_zigbee2mqtt_03.png
+backgroundSize: contain
+
+---
+<v-click>
+  <Arrow x1="900" y1="190" x2="380" y2="380" color="red" />
+</v-click>
+---
+
+# Geräte hinzufügen
+
+* Egal ob ZHA oder Zigbee2MQTT - Geräte werden immer über die Weboberfläche hinzugefügt
+* Es muss ein (temporärer) Anlernemodus aktiviert werden
+* Dann physisches Gerät (z.B. Lampe) in den Anlernemodus versetzen
+
+---
+layout: image
+image: zigbee2mqtt_01.png
+backgroundSize: contain
+
+---
+<v-click>
+  <Arrow x1="900" y1="190" x2="880" y2="100" color="red" />
+</v-click>
+---
+layout: image
+image: zigbee2mqtt_02.png
+backgroundSize: contain
+
+---
+---
+
 
 
 # Komplexe Automatisierung - 1
