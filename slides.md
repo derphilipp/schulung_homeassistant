@@ -20,12 +20,6 @@ mdc: true
 
 ---
 
-# Agenda
-
-#TODO: Agenda füllen
-
----
-
 # Vor dem Kurs - 1
 
 - Vorbereitung: Download und Installation von Homeassistant OS
@@ -887,7 +881,158 @@ backgroundSize: contain
 ---
 ---
 
+# HACS - 1
 
+* HACS ist ein Addon, welches weitere Addons installieren kann
+* Hier finden sich von der Community getriebene Projekte
+* Achtung: Nicht alle Addons sind stabil, manche sind auch inkompatibel
+
+---
+
+# HACS - 2
+* Installation:
+  * Wir brauchen einen Github Account
+  * Wir installieren das SSH/Terminal Plugin
+  * Auf der Kommandozeile führen wir dann folgenden Befehl aus:
+```sh
+wget -O - https://get.hacs.xyz | bash -
+```
+  * Installieren bei den "Integrations" HACS
+
+---
+
+# HACS - 3
+
+* Vorteile
+  * Es können dann weitere Addons, die nicht im offiziellen Store sind, installiert werden
+    * Integrationen
+    * Frontend-Elemente
+    * Automatisierungen
+    * Addons
+  * Persönliche Empfehlungen:
+    * Addons:
+      * [Adaptive Lighting](https://github.com/basnijholt/adaptive-lighting) (Lichtfarbe nach Sonnenstand anpassen)
+      * [Switch Manager](https://github.com/Sian-Lee-SA/Home-Assistant-Switch-Manager) (Schalter verwalten und Knöpfe mit Funktionen versehen)
+
+---
+
+# Fortgeschrittene Automatisierung - 1
+
+* Situation: Wir wollen, dass unser Staubsaug-Roboter einmal an Tag läuft
+* Noch besser wäre es, wenn er nur läuft, wenn wir nicht zu Hause sind
+* Aber bitte nicht, wenn es die Nachbarn stört
+
+---
+
+# Fortgeschrittene Automatisierung - 2
+
+* Wir brauchen die Information, ob der Staubsauger heute schon gelaufen ist
+* Hierfür legen wir uns einen binären Template-Sensor an
+* Dieser
+
+```jinja2
+  {% if has_value('sensor.roborock_vacuum_a15_last_clean_start') %}
+  {{ as_timestamp(states('sensor.roborock_vacuum_a15_last_clean_start')) |timestamp_custom("%F")== as_timestamp(now()) |timestamp_custom("%F") }}
+  {% else %}
+  undefined
+  {% endif %}
+```
+---
+
+# Fortgeschrittene Automatisierung - 3
+## Automatisierung Nr. 1
+
+* Wir erstellen eine Automatisierung, die folgendes macht:
+  * Versuche den Staubsauger laufen zu lassen
+  * wenn es zwische 8:30 und 20:30 Uhr ist
+  * wenn der Staubsauger heute noch nicht gelaufen ist
+  * dann starte den Staubsauger
+
+```yaml
+alias: 🧹 Try to run vacuum
+description: Try to run vacuum
+trigger: []
+condition:
+  - condition: and
+    conditions:
+      - condition: time
+        after: "08:30:00"
+        before: "20:30:00"
+        alias: Okay time for vaccum noise
+      - condition: state
+        entity_id: binary_sensor.vacuum_ran_today
+        state: "off"
+        alias: Vacuum did not run today
+    alias: Time for noise okay & did not clean today yet
+action:
+  - service: vacuum.start
+    data: {}
+    target:
+      entity_id: vacuum.roborock_vacuum_a15
+mode: single
+```
+---
+
+# Fortgeschrittene Automatisierung - 4
+
+## Automatisierung Nr. 2
+
+* Trigger
+  * Starte alle 15 Minuten
+  * Explizit um 16 Uhr
+* Actions
+  * Verodert:
+    * Wenn die Anzahl der Personen im Haus < 1 ist
+    * Wenn die Automatisierung durch den zweiten Trigger ausgelöst wurde
+  * Rufe die oben definierte Automatisierung auf
+
+---
+
+# Fortgeschrittene Automatisierung - 5
+
+* Erklärung:
+  * Die erste Automatisierung sorgt dafür, dass der Staubsauger nur "nachbarverträglich" und auch nur einmal gestartet wird
+  * Egal wie wir es ausführen, "mehr" passiert nie
+  * Die zweite Automatisierung definiert die Events, die den Staubsauger auslösen
+    * Hier: Alle 15 Minuten (falls niemand daheim ist)
+    * Um 16 Uhr (damit auf jeden Fall der Einmal am Tag läuft)
+  * Damit könnten auch aus anderen Automatisierungen auslösen, z.B. "die letzte Person verlässt das Haus"
+
+---
+
+```yaml
+alias: 🧹 Vacuum try every 15 minutes (when noones is home) or at 15:20
+description: >-
+  Try to vaccum if the last persons leaves - or every 15 minutes. If someone is
+  still left at home, fallback to clean at 15:20
+trigger:
+  - platform: time_pattern
+    hours: "*"
+    minutes: /15
+    seconds: "0"
+    id: every_15_minutes
+  - platform: time
+    at: "16:00:00"
+    id: override_time
+condition: []
+action:
+  - condition: or
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.people_at_home
+        below: 1
+      - condition: trigger
+        id: override_time
+    alias: Noone at home or override time
+  - service: automation.trigger
+    data:
+      skip_condition: false
+    target:
+      entity_id: automation.try_to_run_vacuum
+mode: single
+```
+
+---
 
 # Komplexe Automatisierung - 1
 
@@ -1002,29 +1147,6 @@ backgroundSize: contain
 
 ---
 
-# TODO:
-
-* Grafische und Textuelle Konfiguration
- * Unterschied zwischen grafischer und textueller Konfiguration
- * Einführung in die Home Assistant Lovelace UI
- * Grundlagen der textuellen Konfiguration mittels YAML
-* Einbinden von Zigbee (als Beispiel)
- * Was ist Zigbee und warum ist es wichtig für die Heimautomatisierung?
- * Integration von Zigbee-Geräten in Home Assistant
- * Best Practices und Troubleshooting
-* Automatisierungen: Das “smart” in Smart-Home
- * Grundlagen der Automatisierung
- * Erstellen von einfachen bis komplexen Automatisierungsregeln
- * Szenarien, Auslöser, Bedingungen und Aktionen
-* Weitere Datenquellen und Dienste
- * Am Rande: Einbindung externer Datenquellen wie Wetterdienste, Kalender und mehr
- * Verknüpfen und Darstellen dieser Daten in Home Assistant
-* Updates und Backups
- * Wichtige Aspekte von Systemupdates
- * Erstellen und Wiederherstellen von Backups
-* Fragen, Fragen, Fragen
- * Offene Diskussion und Fragerunde
- *
 # Abschluss
 
 [Diese Schulung](https://github.com/derphilipp/schulung_homeassistnat) · [Schulung ansehen](https://derphilipp.github.io/schulung_homeassistant) · [Kontakt](https://philipp-weissmann.de)
