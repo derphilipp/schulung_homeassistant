@@ -1064,7 +1064,7 @@ mode: single
 
 # Komplexe Automatisierung - 3
 
-![Stromverbrauch](public/washing_machine.png)
+![Local Image](/washing_machine.png)
 * Anfangs sehr hoher Stromverbrauch
 * Stromverbrauch sinkt nach einiger Zeit und bleibt bis auf Schleudervorgang niedrig
 
