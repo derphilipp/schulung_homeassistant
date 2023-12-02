@@ -782,6 +782,7 @@ mode: single
 * Funk-Kanäle:
   * Zigbee ist aber nicht WLAN - Funkt aber auf 2,4GHz
   * Wir müssen die Funkfrequenzen prüfen, ob sie überlaufen sind!
+  * [Zusammenhang Kanäle von Zigbee und Wifi visualisiert](https://www.metageek.com/training/resources/zigbee-wifi-coexistence/)
   * Jedes Gerät, welches wir einbinden, muss auf dem gleichen Kanal sein
   * Wenn wir den Kanal wechseln, müssen wir alle Geräte neu einbinden -> Extrem Aufwändig
   * Wir testen mit einigen Geräten, wie gut die Kanäle funktionieren BEVOR wir alle Geräte einbinden
