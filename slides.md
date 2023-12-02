@@ -154,6 +154,130 @@ Keine 100% Deckung der jeweiligen Alternativen (z.B. Philips Hue steuert nur Lam
 
 ---
 
+# Installation Virtualbox - 1
+
+* Nach der Installation von Virtualbox, starten wir es
+* Unter Windows: Falls sich Virtualbox "beschwert", dass die C++ Runtime fehlt, muss das [Paket hier](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2015-2017-2019-and-2022) nachinstalliert werden
+* Wir legen dann mit "New" / "Neu" eine neue VM an
+
+---
+layout: image
+image: virtualbox_01.png
+backgroundSize: contain
+---
+
+<v-click>
+  <Arrow x1="800" y1="290" x2="570" y2="90" color="red" />
+</v-click>
+---
+
+# Installation Virtualbox - 2
+
+
+* Wir legen eine neue VM an
+  * Name: `homeassistant`
+  * Ordner: Beliebig
+  * Iso Image: Keines(!)
+  * Typ: `Linux`
+  * Version: `Linux 2.6/3.x/4.x (64-bit)`
+
+---
+layout: image
+image: virtualbox_02.png
+backgroundSize: contain
+---
+---
+
+# Installation Virtualbox - 3
+
+* Base Memory / RAM: `2048 MB` oder mehr
+* Processors: `2` oder mehr
+* `Enable EFI` muss aktiviert sein (!) - sonst kein booten möglich
+
+---
+layout: image
+image: virtualbox_03.png
+backgroundSize: contain
+---
+---
+
+# Installation Virtualbox - 4
+
+* Option `IUse an existing virtual hard disk file` auswählen
+* Mit dem Ordner-Icon die heruntergeladene `.vdi`-Datei, z.B. `haos_ova-11.1.vdi` auswählen
+
+---
+layout: image
+image: virtualbox_04.png
+backgroundSize: contain
+---
+---
+layout: image
+image: virtualbox_05.png
+backgroundSize: contain
+---
+---
+layout: image
+image: virtualbox_06.png
+backgroundSize: contain
+---
+---
+layout: image
+image: virtualbox_07.png
+backgroundSize: contain
+---
+---
+
+# Installation Virtualbox - 5
+
+* Mit `Finish` abschließen, aber noch nicht starten
+
+---
+layout: image
+image: virtualbox_08.png
+backgroundSize: contain
+---
+---
+
+# Installation Virtualbox - 6
+* Wir müssen noch die Netzwerkeinstellungen anpassen
+* Wir gehen auf `Settings` / `Einstellungen`
+* Dort auf den Reiter "Network" / "Netzwerk
+* Dort auf "Adapter 1" / "Adapter 1"
+* Dort auf "Attached to" / "Verbinden mit"
+* Dort auf "Bridged Adapter" / "Brücke"
+* Dann können wir unser System starten
+
+---
+layout: image
+image: virtualbox_09.png
+backgroundSize: contain
+---
+---
+layout: image
+image: virtualbox_10.png
+backgroundSize: contain
+---
+---
+layout: image
+image: virtualbox_11.png
+backgroundSize: contain
+---
+---
+layout: image
+image: virtualbox_12.png
+backgroundSize: contain
+---
+---
+layout: image
+image: virtualbox_13.png
+backgroundSize: contain
+---
+---
+
+
+
+
 # Installation - 1
 
 * Schulung:
