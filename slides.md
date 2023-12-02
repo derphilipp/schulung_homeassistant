@@ -1064,7 +1064,7 @@ mode: single
 
 # Komplexe Automatisierung - 3
 
-![Stromverbrauch](washing_machine.png)
+![Stromverbrauch](public/washing_machine.png)
 * Anfangs sehr hoher Stromverbrauch
 * Stromverbrauch sinkt nach einiger Zeit und bleibt bis auf Schleudervorgang niedrig
 
@@ -1149,4 +1149,4 @@ mode: single
 
 # Abschluss
 
-[Diese Schulung](https://github.com/derphilipp/schulung_homeassistnat) · [Schulung ansehen](https://derphilipp.github.io/schulung_homeassistant) · [Kontakt](https://philipp-weissmann.de)
+[Diese Schulung](https://github.com/derphilipp/schulung_homeassistant) · [Schulung ansehen](https://derphilipp.github.io/schulung_homeassistant) · [Kontakt](https://philipp-weissmann.de)
